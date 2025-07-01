@@ -1,7 +1,9 @@
-﻿using eCommerce.Core.DTO;
+﻿using Dapper;
+using eCommerce.Core.DTO;
 using eCommerce.Core.Entities;
 using eCommerce.Core.RepositoryContracts;
 using eCommerce.Infrastructure.DbContext;
+using Npgsql;
 
 namespace eCommerce.Infrastructure.Repositories;
 
@@ -17,10 +19,21 @@ internal class UsersRepository : IUsersRepository
 
     public async Task<ApplicationUser?> AddUser(ApplicationUser user)
     {
+
         //Generate a new unique user ID for the user
         user.UserID = Guid.NewGuid();
 
-        return user;
+        // SQL Query to insert user data into the "Users" table.
+        // Correct SQL Query to insert user data into the "Users" table.
+        string query = "INSERT INTO public.\"Users\" (\"UserID\", \"Email\", \"PersonName\", \"Gender\", \"Password\") " +
+                       "VALUES (@UserID, @Email, @PersonName, @Gender, @Password)";
+        int rowCountAffected = await _dbContext.dbConnection.ExecuteAsync(query, user);
+        if (rowCountAffected > 0)
+        {
+            return user;
+        }
+        
+        return null;
     }
 
     public async Task<ApplicationUser?> GetUserByEmailAndPassword(string? email, string? password)
