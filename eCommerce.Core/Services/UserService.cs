@@ -35,16 +35,8 @@ internal class UserService : IUserService
     public async Task<AuthenticationResponse?> Register(RegisterRequest registerRequest)
     {
 
-        //Create a new Application object from RegisterRequest
-
-        ApplicationUser user = new ApplicationUser() { 
-        
-            PersonName = registerRequest.PersonName,
-            Email = registerRequest.Email,
-            Password = registerRequest.Password,
-            Gender = registerRequest.Gender.ToString(),
-
-        };
+        // Use AutoMapper to map RegisterRequest to ApplicationUser
+        ApplicationUser user = _mapper.Map<ApplicationUser>(registerRequest);
 
         ApplicationUser? registeredUser = await _usersRepository.AddUser(user);
 

@@ -17,5 +17,12 @@ public class ApplicationUserMappingProfile : Profile
             .ForMember(dest => dest.Success, opt => opt.Ignore())
             .ForMember(dest => dest.Token, opt => opt.Ignore());
 
+        // ✅ New mapping: RegisterRequest to ApplicationUser
+        CreateMap<RegisterRequest, ApplicationUser>()
+            .ForMember(dest => dest.PersonName, opt => opt.MapFrom(src => src.PersonName))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
+            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString())); // Assuming Gender is enum
+
     }
 }
