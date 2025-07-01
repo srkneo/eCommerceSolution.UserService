@@ -17,6 +17,7 @@ internal class UsersRepository : IUsersRepository
     public async Task<ApplicationUser?> GetUserByEmailAndPassword(string? email, string? password)
     {
         return new ApplicationUser() { 
+            UserID = Guid.NewGuid(),
             Email = email, 
             Password = password,
             PersonName = "Person Name",
