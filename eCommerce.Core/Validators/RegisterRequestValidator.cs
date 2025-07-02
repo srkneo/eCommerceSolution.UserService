@@ -18,6 +18,8 @@ public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
         RuleFor(x => x.PersonName)
             .NotEmpty().WithMessage("Name is required.")
             .MaximumLength(100).WithMessage("Name cannot exceed 100 characters.");
-        
+
+        RuleFor(x => x.Gender)
+            .IsInEnum().WithMessage("Gender selection is invalid.");
     }
 }
