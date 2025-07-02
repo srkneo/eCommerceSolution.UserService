@@ -1,5 +1,7 @@
 ﻿using eCommerce.Core.ServiceContracts;
 using eCommerce.Core.Services;
+using eCommerce.Core.Validators;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace eCommerce.Core
@@ -17,6 +19,7 @@ namespace eCommerce.Core
             //TO DO: Add Services to the IOC Container
             //Core services often include data access, caching and other low-level compnents.
             services.AddTransient<IUserService, UserService>();
+            services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
             return services;
         }
     }
