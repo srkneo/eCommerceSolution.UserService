@@ -17,6 +17,8 @@ internal class UserService : IUserService
         _mapper = mapper;
     }
 
+ 
+
     public async Task<AuthenticationResponse?> LoginRequest(LoginRequest loginRequest)
     {
         ApplicationUser? user = await _usersRepository.GetUserByEmailAndPassword(loginRequest.Email, loginRequest.password);
@@ -52,5 +54,12 @@ internal class UserService : IUserService
             Success = true,
             Token = "token"
         };
+    }
+
+    public async Task<UserDTO> GetUserByUserID(Guid UserID)
+    {
+        ApplicationUser? user = await _usersRepository.GetUserByUserID(UserID);
+
+        return _mapper.Map<UserDTO>(user);
     }
 }

@@ -47,4 +47,13 @@ internal class UsersRepository : IUsersRepository
         return user;
 
     }
+
+    public async Task<ApplicationUser?> GetUserByUserID(Guid? userID)
+    {
+        string query = "SELECT * FROM public.\"Users\" WHERE \"UserID\" = @UserID";
+        var parameters = new { UserID = userID };
+
+        using var connection = _dbContext.dbConnection;
+        return await connection.QueryFirstOrDefaultAsync(query,parameters);
+    }
 }
